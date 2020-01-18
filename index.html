@@ -53,6 +53,9 @@
             }
 
             function showCurrentSubscription() {
+                hide("success")
+                hide("error")
+
                 const snippet = currentSubscription().snippet
 
                 document.getElementById("publishedAt").innerHTML = snippet.publishedAt
