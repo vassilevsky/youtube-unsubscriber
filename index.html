@@ -107,9 +107,11 @@
 
             function videoHTML(video) {
                 const thumb = video.snippet.thumbnails.default.url
+                const id    = video.snippet.resourceId.videoId
+                const url   = "https://www.youtube.com/watch?v=" + id
 
                 return `<tr>
-                            <td><img src="${thumb}"></td>
+                            <td><a href="${url}" target="_blank"><img src="${thumb}"></a></td>
                             <td>${video.snippet.publishedAt}</td>
                             <td>${video.snippet.title}</td>
                         </tr>`
