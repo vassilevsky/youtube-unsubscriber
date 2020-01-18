@@ -47,7 +47,6 @@
             }
 
             function setup(page) {
-                console.log(page)
                 state.subscriptions = page.items
                 showCurrentSubscription()
             }
@@ -75,7 +74,6 @@
             }
 
             function check(response) {
-                console.log(response)
                 if (response.ok) {
                     show("success")
                 } else {
