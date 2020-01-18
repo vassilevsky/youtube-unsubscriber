@@ -89,12 +89,14 @@
             }
 
             function videos() {
-                fetch(auth("/channels?part=contentDetails&id=" + currentSubscription().snippet.resourceId.channelId))
+                const channelId = currentSubscription().snippet.resourceId.channelId
+                fetch(auth("/channels?part=contentDetails&id=" + channelId))
                 .then(r => r.json()).then(j => loadVideos(j.items[0]))
             }
 
             function loadVideos(channel) {
-                fetch(auth("/playlistItems?part=snippet&maxResults=10&playlistId=" + channel.contentDetails.relatedPlaylists.uploads))
+                const playlistId = channel.contentDetails.relatedPlaylists.uploads
+                fetch(auth("/playlistItems?part=snippet&maxResults=10&playlistId=" + playlistId))
                 .then(r => r.json()).then(j => showVideos(j.items))
             }
 
@@ -104,7 +106,13 @@
             }
 
             function videoHTML(video) {
-                return `<tr><td><img src="${video.snippet.thumbnails.default.url}"></td><td>${video.snippet.publishedAt}</td><td>${video.snippet.title}</td>`
+                const thumb = video.snippet.thumbnails.default.url
+
+                return `<tr>
+                            <td><img src="${thumb}"></td>
+                            <td>${video.snippet.publishedAt}</td>
+                            <td>${video.snippet.title}</td>
+                        </tr>`
             }
 
             function show(id) {
