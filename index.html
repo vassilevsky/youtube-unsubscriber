@@ -99,7 +99,7 @@
             }
 
             function showVideos(videos) {
-                document.getElementById("videos").innerHTML = videos.map(video => videoHTML(video)).join()
+                document.getElementById("videos").innerHTML = videos.map(video => videoHTML(video)).join("\n")
                 show("videos")
             }
 
