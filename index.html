@@ -31,14 +31,14 @@
             if (location.hash.includes("access_token")) {
                 access_token = location.hash.split("&").map(kv => kv.split("=")).find(kv => kv[0] == "#access_token")[1]
                 show("channel")
-                fetch(auth("https://www.googleapis.com/youtube/v3/subscriptions?mine=true&order=unread&&part=snippet&maxResults=50"))
+                fetch(auth("/subscriptions?mine=true&order=unread&&part=snippet&maxResults=50"))
                 .then(response => response.json()).then(page => setup(page))
             } else {
                 show("auth")
             }
 
             function auth(url) {
-                return url + "&access_token=" + access_token
+                return "https://www.googleapis.com/youtube/v3" + url + "&access_token=" + access_token
             }
 
             const state = {
@@ -70,7 +70,7 @@
             }
 
             function unsubscribe() {
-                fetch(auth("https://www.googleapis.com/youtube/v3/subscriptions?id=" + currentSubscription().id), {method: "DELETE"})
+                fetch(auth("/subscriptions?id=" + currentSubscription().id), {method: "DELETE"})
                 .then(check)
             }
 
@@ -89,12 +89,12 @@
             }
 
             function videos() {
-                fetch(auth("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=" + currentSubscription().snippet.channelId))
+                fetch(auth("/channels?part=contentDetails&id=" + currentSubscription().snippet.channelId))
                 .then(r => r.json()).then(j => loadVideos(j.items[0]))
             }
 
             function loadVideos(channel) {
-                fetch(auth("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=" + channel.contentDetails.relatedPlaylists.uploads))
+                fetch(auth("/playlistItems?part=snippet&maxResults=10&playlistId=" + channel.contentDetails.relatedPlaylists.uploads))
                 .then(r => r.json()).then(j => showVideos(j.items))
             }
 
