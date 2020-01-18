@@ -13,7 +13,6 @@
             <img id="thumbnail" src=""/>
             <h1 id="title">Channel</h1>
             <p id="description">Channel description</p>
-            <p>Last published <span id="publishedAt">2020</span></p>
 
             <button onclick="unsubscribe()" style="font-size: x-large">Unsubscribe</button>
             <button onclick="videos()">Load videos</button>
@@ -67,7 +66,6 @@
                 document.getElementById("thumbnail").src         = snippet.thumbnails.default.url
                 document.getElementById("title").innerHTML       = snippet.title
                 document.getElementById("description").innerHTML = snippet.description
-                document.getElementById("publishedAt").innerHTML = snippet.publishedAt
             }
 
             function unsubscribe() {
