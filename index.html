@@ -15,11 +15,15 @@
             <p id="description">Channel description</p>
             <p>Last published <span id="publishedAt">2020</span></p>
 
+            <button onclick="videos()">Load videos</button>
             <button onclick="unsubscribe()" style="font-size: x-large">Unsubscribe</button>
             <button onclick="next()">Next</button>
 
             <p id="success" style="color: green">Success</p>
             <p id="error" style="color: red">Error</p>
+
+            <table id="videos">
+            </table>
         </div>
 
         <script>
@@ -55,6 +59,7 @@
             function showCurrentSubscription() {
                 hide("success")
                 hide("error")
+                hide("videos")
 
                 const snippet = currentSubscription().snippet
 
@@ -82,6 +87,25 @@
             function next() {
                 state.currentIndex += 1
                 showCurrentSubscription()
+            }
+
+            function videos() {
+                fetch(auth("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=" + currentSubscription().snippet.channelId))
+                .then(r => r.json()).then(j => loadVideos(j.items[0]))
+            }
+
+            function loadVideos(channel) {
+                fetch(auth("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=" + channel.contentDetails.relatedPlaylists.uploads))
+                .then(r => r.json()).then(j => showVideos(j.items))
+            }
+
+            function showVideos(videos) {
+                document.getElementById("videos").innerHTML = videos.map(video => videoHTML(video)).join()
+                show("videos")
+            }
+
+            function videoHTML(video) {
+                return `<tr><td><img src="${video.snippet.thumbnails.default.url}"></td><td>${video.snippet.title}</td>`
             }
 
             function show(id) {
