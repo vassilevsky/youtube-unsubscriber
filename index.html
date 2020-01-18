@@ -89,7 +89,7 @@
             }
 
             function videos() {
-                fetch(auth("/channels?part=contentDetails&id=" + currentSubscription().snippet.channelId))
+                fetch(auth("/channels?part=contentDetails&id=" + currentSubscription().snippet.resourceId.channelId))
                 .then(r => r.json()).then(j => loadVideos(j.items[0]))
             }
 
