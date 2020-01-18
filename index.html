@@ -24,7 +24,7 @@
 
         <script>
             let access_token = null
-            if location.hash.includes("access_token") {
+            if (location.hash.includes("access_token")) {
                 access_token = location.hash.split("&").map(kv => kv.split("=")).find(kv => kv[0] == "#access_token")[1]
                 show("channel")
                 fetch(auth("https://www.googleapis.com/youtube/v3/subscriptions?mine=true&order=unread&&part=snippet&maxResults=50"))
@@ -69,7 +69,7 @@
 
             function check(response) {
                 console.log(response)
-                if response.ok {
+                if (response.ok) {
                     show("success")
                 } else {
                     show("error")
