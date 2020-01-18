@@ -18,10 +18,14 @@
     <script>
       let access_token = location.hash.split("&").map(kv => kv.split("=")).find(kv => kv[0] == "#access_token")[1]
 
-      request("https://www.googleapis.com/youtube/v3/subscriptions?mine=true&order=unread&&part=snippet&maxResults=50")
+      request("https://www.googleapis.com/youtube/v3/subscriptions?mine=true&order=unread&&part=snippet&maxResults=50", setup)
 
-      function request(url) {
-        fetch(url + "&access_token=" + access_token).then(response => console.log(response))
+      function setup(subscriptions) {
+        console.log(subscriptions)
+      }
+
+      function request(url, f) {
+        fetch(url + "&access_token=" + access_token).then(response => return response.json()).then(json => f(json))
       }
     </script>
   </body>
