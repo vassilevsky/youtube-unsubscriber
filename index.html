@@ -10,6 +10,8 @@
         </div>
 
         <div id="channel" style="display: none">
+            <p><span id="n">0</span> / <span id="total">0</span></p>
+
             <img id="thumbnail" src=""/>
             <h1 id="title">Channel</h1>
             <p id="description">Channel description</p>
@@ -49,6 +51,7 @@
 
             function setup(page) {
                 state.subscriptions = page.items
+                document.getElementById("total").innerHTML = page.items.length
                 showCurrentSubscription()
             }
 
@@ -63,6 +66,7 @@
 
                 const snippet = currentSubscription().snippet
 
+                document.getElementById("n").src                 = state.currentIndex + 1
                 document.getElementById("thumbnail").src         = snippet.thumbnails.default.url
                 document.getElementById("title").innerHTML       = snippet.title
                 document.getElementById("description").innerHTML = snippet.description
