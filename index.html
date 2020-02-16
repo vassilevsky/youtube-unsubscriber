@@ -66,7 +66,7 @@
 
                 const snippet = currentSubscription().snippet
 
-                document.getElementById("n").src                 = state.currentIndex + 1
+                document.getElementById("n").innerHTML           = state.currentIndex + 1
                 document.getElementById("thumbnail").src         = snippet.thumbnails.default.url
                 document.getElementById("title").innerHTML       = snippet.title
                 document.getElementById("description").innerHTML = snippet.description
