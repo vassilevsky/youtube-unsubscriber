@@ -53,7 +53,7 @@
                 response = await fetch(auth(q)).then(r => r.json())
                 while (response.nextPageToken) {
                     response = await fetch(auth(q + "&pageToken=" + response.nextPageToken)).then(r => r.json())
-                    state.subscriptions.push(response.items)
+                    state.subscriptions.concat(response.items)
                 }
             }
 
