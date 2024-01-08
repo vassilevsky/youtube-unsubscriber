@@ -52,6 +52,7 @@
             async function loadSubscriptions() {
                 const q = "/subscriptions?mine=true&order=unread&part=snippet&maxResults=50"
                 response = await fetch(auth(q)).then(r => r.json())
+                state.subscriptions = response.items
                 while (response.nextPageToken) {
                     response = await fetch(auth(q + "&pageToken=" + response.nextPageToken)).then(r => r.json())
                     state.subscriptions = state.subscriptions.concat(response.items)
