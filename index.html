@@ -34,8 +34,7 @@
             if (location.hash.includes("access_token")) {
                 access_token = location.hash.split("&").map(kv => kv.split("=")).find(kv => kv[0] == "#access_token")[1]
                 show("channel")
-                fetch(auth("/subscriptions?mine=true&order=unread&part=snippet&maxResults=50"))
-                .then(response => response.json()).then(page => setup(page))
+                loadSubscriptions().then(setup)
             } else {
                 show("auth")
             }
@@ -49,9 +48,17 @@
                 currentIndex: 0
             }
 
-            function setup(page) {
-                state.subscriptions = page.items
-                document.getElementById("total").innerHTML = page.items.length
+            async function loadSubscriptions() {
+                const q = "/subscriptions?mine=true&order=unread&part=snippet&maxResults=50"
+                response = await fetch(auth(q)).then(r => r.json())
+                while (response.nextPageToken) {
+                    response = await fetch(auth(q + "&pageToken=" + response.nextPageToken)).then(r => r.json())
+                    state.subscriptions.push(response.items)
+                }
+            }
+
+            function setup() {
+                document.getElementById("total").innerHTML = state.subscriptions.length
                 showCurrentSubscription()
             }
 

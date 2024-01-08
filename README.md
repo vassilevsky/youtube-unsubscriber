@@ -14,7 +14,6 @@ This is understandable.
 
 ## To do
 
-* Load all pages of the channel list. YouTube Data API has a limit of 50 items per page.
 * Some styling.
 
-I might accept pull requests with these.
+I might accept pull requests with this.
